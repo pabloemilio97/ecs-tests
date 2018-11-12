@@ -9,37 +9,36 @@ public class MTax implements Constant {
     public static List<String> validate(List<X_Tax> xTaxList) {
         List<String> errorList = new ArrayList<>();
 
-        if (xTaxList != null && xTaxList.size() > 0) {
-            List<String> validIds = new ArrayList<>();
-            int cont = 0;
+        if (xTaxList != null && !xTaxList.isEmpty()) {
+            List<String> validIdList = new ArrayList<>();
+            bool hasLocalRate = false;
             for (X_Tax tax : xTaxList) {
                 if (tax.getId() != null) {
-                    validIds.add(tax.getId().toString());
+                    validIdList.add(tax.getId().toString());
                 }
                 if (tax.getTax() == null) {
                     errorList.add("El impuesto es obligatorio");
                 }
                 if (!tax.isLocal()) {
-                    cont++;
+                    hasLocalRate = true;
                 }
             }
-            if (cont<=0) {
+            if (!hasLocalRate) {
                 errorList.add("Debe de incluir al menos una tasa no local");
             }
-            if (validIds.size() > 0) {
-                    List<X_Tax> xt = TaxsByListId(validIds, false);
-                    if (xt.size() != validIds.size()) {
+            if (!validIdList.isEmpty()) {
+                    List<X_Tax> xtList  = TaxsByListId(validIdList, false);
+                    if (xtList.size() != validIdList.size()) {
                         errorList.add("Existen datos no guardados previamente");
                     } else {
                         HashMap<String, X_Tax> map_taxs = new HashMap<String, X_Tax>();
-                        for (X_Tax tax: xt) {
+                        for (X_Tax tax : xtList) {
                             map_taxs.put(tax.getId().toString(), tax);
                         }
-                        for (int i = 0; i < xTaxList.size(); i++) {
-                            if (xTaxList.get(i).getId() != null) {
-                                xTaxList.get(i).setCreated(
-                                        map_taxs.get(xTaxList.get(i).getId().toString())
-                                                .getCreated());
+                        for (X_Tax tax : xTaxList) {
+                            if (tax.getId() != null) {
+                                String taxId = tax.getId().toString();
+                                tax.setCreated(map_taxs.get(taxId).getCreated());
                             }
                         }
                     }
@@ -47,5 +46,5 @@ public class MTax implements Constant {
         }
         return errorList;
     }
-    
+
 }
