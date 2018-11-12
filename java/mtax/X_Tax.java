@@ -66,6 +66,6 @@ public class X_Tax {
     public void setUpdated(Date updated) {this.updated = updated;}
 
     public String getVersion() {return version;}
-    public void setVersion(String version) {this.version = version;}
+    public void setVersion(String version) {this.version = version;}   
     
 }
