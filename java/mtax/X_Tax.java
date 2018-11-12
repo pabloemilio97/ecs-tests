@@ -12,7 +12,7 @@ public class X_Tax {
     private BigDecimal rate;
     private BigDecimal fee;
     private BigDecimal amount;
-    private boolean trasladado;
+    private boolean transferred;
     private boolean local;
     private boolean active;
     private String createdBy;
@@ -80,12 +80,12 @@ public class X_Tax {
         this.amount = amount;
     }
 
-    public boolean isTrasladado() {
-        return trasladado;
+    public boolean isTransferred() {
+        return transferred;
     }
 
-    public void setTrasladado(boolean trasladado) {
-        this.trasladado = trasladado;
+    public void setTransferred(boolean transferred) {
+        this.transferred = transferred;
     }
     
     public boolean isLocal() {
