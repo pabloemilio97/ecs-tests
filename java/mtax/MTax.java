@@ -27,21 +27,21 @@ public class MTax implements Constant {
                 errorList.add("Debe de incluir al menos una tasa no local");
             }
             if (!validIdList.isEmpty()) {
-                    List<X_Tax> xtList  = TaxsByListId(validIdList, false);
-                    if (xtList.size() != validIdList.size()) {
-                        errorList.add("Existen datos no guardados previamente");
-                    } else {
-                        HashMap<String, X_Tax> map_taxs = new HashMap<String, X_Tax>();
-                        for (X_Tax tax : xtList) {
-                            map_taxs.put(tax.getId().toString(), tax);
-                        }
-                        for (X_Tax tax : xTaxList) {
-                            if (tax.getId() != null) {
-                                String taxId = tax.getId().toString();
-                                tax.setCreated(map_taxs.get(taxId).getCreated());
-                            }
+                List<X_Tax> xtList  = TaxsByListId(validIdList, false);
+                if (xtList.size() != validIdList.size()) {
+                    errorList.add("Existen datos no guardados previamente");
+                } else {
+                    HashMap<String, X_Tax> map_taxs = new HashMap<String, X_Tax>();
+                    for (X_Tax tax : xtList) {
+                        map_taxs.put(tax.getId().toString(), tax);
+                    }
+                    for (X_Tax tax : xTaxList) {
+                        if (tax.getId() != null) {
+                            String taxId = tax.getId().toString();
+                            tax.setCreated(map_taxs.get(taxId).getCreated());
                         }
                     }
+                }
             }
         }
         return errorList;
