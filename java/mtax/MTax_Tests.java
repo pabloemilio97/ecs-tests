@@ -34,22 +34,22 @@ class MTax_Tests {
 		xt2.setCreated(date);
 
 		X_Tax xt3 = new X_Tax();
-
-		xTaxList.add(xt);
-		xTaxList.add(xt2);
-		xTaxList.add(xt3);
 	}
 
 	@Test
 	public void taxListIsValid() {
+		xTaxList = new ArrayList<>();
+		xTaxList.add(xt);
 		List<String> errorList = MTax.validate(xTaxList);
-		assertTrue(!errorList.isEmpty());
+		assertTrue(errorList.isEmpty());
 	}
 
 	@Test
 	public void taxListIsNotValid() {
+		xTaxList = new ArrayList<>();
+		xTaxList.add(xt3);
 		List<String> errorList = MTax.validate(xTaxList);
-		assertTrue(errorList.isEmpty());
+		assertTrue(!errorList.isEmpty());
 	}
 
 }
