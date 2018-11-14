@@ -11,7 +11,7 @@ public class MTax implements Constant {
 
         if (xTaxList != null && !xTaxList.isEmpty()) {
             List<String> validIdList = new ArrayList<>();
-            bool hasLocalRate = false;
+            bool hasNonLocalRate = false;
             for (X_Tax tax : xTaxList) {
                 if (tax.getId() != null) {
                     validIdList.add(tax.getId().toString());
@@ -20,10 +20,10 @@ public class MTax implements Constant {
                     errorList.add("El impuesto es obligatorio");
                 }
                 if (!tax.isLocal()) {
-                    hasLocalRate = true;
+                    hasNonLocalRate = true;
                 }
             }
-            if (!hasLocalRate) {
+            if (!hasNonLocalRate) {
                 errorList.add("Debe de incluir al menos una tasa no local");
             }
             if (!validIdList.isEmpty()) {
