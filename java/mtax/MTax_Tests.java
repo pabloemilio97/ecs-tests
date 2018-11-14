@@ -22,7 +22,7 @@ class MTax_Tests {
 		Date date = calendar.getTime();
 		xt.setId("1");
 		xt.setTax("tax1");
-		xt.setLocal(true);
+		xt.setLocal(false);
 		xt.setCreated(date);
 		
 		X_Tax xt2 = new X_Tax();
@@ -30,7 +30,7 @@ class MTax_Tests {
 		Date date = calendar.getTime();
 		xt2.setId("2");
 		xt2.setTax("tax2");
-		xt2.setLocal(false);
+		xt2.setLocal(true);
 		xt2.setCreated(date);
 
 		X_Tax xt3 = new X_Tax();
@@ -41,13 +41,21 @@ class MTax_Tests {
 		xTaxList = new ArrayList<>();
 		xTaxList.add(xt);
 		List<String> errorList = MTax.validate(xTaxList);
-		assertTrue(errorList.isEmpty());
+
+		boolean hasTaxNotValid = false;
+		for(String error : errorList) {
+			if (error == "La lista de impuestos no es válida") {
+				hasTaxNotValid = true;
+			}
+		}
+		assertTrue(!hasTaxNotValid);
 	}
 
 	@Test
 	public void taxListIsNotValid() {
+		X_Tax xt = new X_Tax();
 		xTaxList = new ArrayList<>();
-		xTaxList.add(xt3);
+		xTaxList.add(xt);
 		List<String> errorList = MTax.validate(xTaxList);
 		assertTrue(!errorList.isEmpty());
 	}
