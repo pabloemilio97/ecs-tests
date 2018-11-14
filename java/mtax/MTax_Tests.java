@@ -9,41 +9,27 @@ import java.util.List;
 import java.util.ArrayList;
 
 class MTax_Tests {
-
-	private List<X_Tax> xTaxList = new ArrayList<>();
 	
 	@Mock
 	X_Tax TaxsByListId;
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-		X_Tax xt2 = new X_Tax();
-		Calendar calendar = new GregorianCalendar(2018, 6, 6);
-		Date date = calendar.getTime();
-		xt2.setId("2");
-		xt2.setTax("tax2");
-		xt2.setLocal(true);
-		xt2.setCreated(date);
-
-		X_Tax xt3 = new X_Tax();
-	}
+	public static void setUpBeforeClass() throws Exception {}
 
 	@Test
 	public void taxListIsValid() {
 		X_Tax xt = new X_Tax();
-
-		xTaxList = new ArrayList<>();
+		List<X_Tax> xTaxList = new ArrayList<>();
 		xTaxList.add(xt);
 		List<String> errorList = MTax.validate(xTaxList);
 
-		boolean hasTaxNotValid = false;
+		boolean hasTaxListNotValid = false;
 		for(String error : errorList) {
 			if (error == "La lista de impuestos no es válida") {
-				hasTaxNotValid = true;
+				hasTaxListNotValid = true;
 			}
 		}
-		assertTrue(!hasTaxNotValid);
+		assertTrue(!hasTaxListNotValid);
 	}
 
 	@Test
@@ -51,13 +37,29 @@ class MTax_Tests {
 		List<X_Tax> xTaxList;
 		List<String> errorList = MTax.validate(xTaxList);
 		
-		boolean hasTaxNotValid = false;
+		boolean hasTaxListNotValid = false;
 		for(String error : errorList) {
 			if (error == "La lista de impuestos no es válida") {
-				hasTaxNotValid = true;
+				hasTaxListNotValid = true;
 			}
 		}
-		assertTrue(hasTaxNotValid);
+		assertTrue(hasTaxListNotValid);
+	}
+
+	@Test
+	public void errorListContainsTaxError() {
+		X_Tax xt = new X_Tax();
+		List<X_Tax> xTaxList = new ArrayList<>();
+		xTaxList.add(xt);
+		List<String> errorList = MTax.validate(xTaxList);
+
+		boolean hasTax = true;
+		for(String error : errorList) {
+			if (error == "El impuesto es obligatorio") {
+				hasTax = false;
+			}
+		}
+		assertTrue(hasTax);
 	}
 
 }
