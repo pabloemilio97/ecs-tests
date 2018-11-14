@@ -44,6 +44,9 @@ public class MTax implements Constant {
                 }
             }
         }
+        else{
+            errorList.add("La lista de impuestos no es válida");
+        }
         return errorList;
     }
 
